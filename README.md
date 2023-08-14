@@ -1,4 +1,4 @@
-# Proyecto de Chat en Web
+# Proyecto Chat application 
 
 Este es un proyecto de una aplicación de chat en la web desarrollada con Node.js, TypeScript, MySQL y Express.
 
