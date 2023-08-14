@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TypeScript
+/dist/
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Build output
+build/
+out/
+
+# Dependency directories
+jspm_packages/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# MySQL
+*.sql
