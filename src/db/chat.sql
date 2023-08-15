@@ -1,4 +1,4 @@
-Drop database if exists `chat_db`;
+DROP DATABASE IF EXISTS chat_db;
 CREATE DATABASE chat_db;
 
 USE chat_db;
@@ -7,9 +7,18 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  password VARCHAR(100) NOT NULL
+  password VARCHAR(100) NOT NULL,
+  friends_count int not null default 0,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE friendships (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  friend_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (friend_id) REFERENCES users(id)
+);
 
 CREATE TABLE messages (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,3 +29,46 @@ CREATE TABLE messages (
   FOREIGN KEY (sender_id) REFERENCES users(id),
   FOREIGN KEY (receiver_id) REFERENCES users(id)
 );
+
+DELIMITER //
+CREATE TRIGGER update_friends_count
+AFTER INSERT ON friendships
+FOR EACH ROW
+BEGIN
+  -- Actualizar el conteo de amigos para el usuario que agregó un amigo
+  UPDATE users
+  SET friends_count = friends_count + 1
+  WHERE id = NEW.user_id;
+
+  -- Actualizar el conteo de amigos para el usuario que se agregó como amigo
+  UPDATE users
+  SET friends_count = friends_count + 1
+  WHERE id = NEW.friend_id;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER update_friends_count_after_insert
+AFTER INSERT ON friendships
+FOR EACH ROW
+BEGIN
+  -- Incrementar el contador de amigos para ambos usuarios
+  UPDATE users
+  SET friends_count = friends_count + 1
+  WHERE id = NEW.user_id OR id = NEW.friend_id;
+END;
+//
+
+CREATE TRIGGER update_friends_count_after_delete
+AFTER DELETE ON friendships
+FOR EACH ROW
+BEGIN
+  -- Decrementar el contador de amigos para ambos usuarios
+  UPDATE users
+  SET friends_count = friends_count - 1
+  WHERE id = OLD.user_id OR id = OLD.friend_id;
+END;
+//
+DELIMITER ;
+
