@@ -55,3 +55,31 @@ export const updateUserDetails = (userId: number, username: string, email: strin
     });
   };
   
+
+  export const getAllUsersFromDB = () => {
+    const query = 'SELECT * FROM users';
+    return new Promise((resolve, reject) => {
+      db.query(query, (err, users) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(users);
+        }
+      });
+    });
+  };
+  
+
+  export const getUserByIdFromDB = (userId: number) => {
+    const query = 'SELECT * FROM users WHERE id = ?';
+    return new Promise((resolve, reject) => {
+      db.query(query, [userId], (err, users) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(users[0]); // Devuelve el primer resultado si existe
+        }
+      });
+    });
+  };
+  
