@@ -29,7 +29,7 @@ A continuación se muestran las rutas disponibles en la API:
 - `GET /users/:id`: Obtención de un usuario por ID.
 - `GET /users/handle/:user_handle`: Obtención de un usuario por user_handle.
 - `POST /users/add-friend`: Agregar un amigo a la lista de amigos.
-- `GET /users/:id/common-friends/:friend_id`: Obtener amigos en común entre dos usuarios.
+- `GET /users/:friend_id/common-friends/:id`: Obtener amigos en común entre dos usuarios.
 - `DELETE /users/delete-friend/:friend_id`: Eliminar un amigo de la lista de amigos.
 
 ## Variables de Entorno
