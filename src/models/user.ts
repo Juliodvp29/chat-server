@@ -1,10 +1,10 @@
 import mysql from 'mysql';
 import db from '../utils/db';
 
-export const createUser = (db: mysql.Connection, username: string, email: string, password: string) => {
-  const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+export const createUser = (db: mysql.Connection, username: string, user_handle: string, email: string, password: string) => {
+  const query = 'INSERT INTO users (username, user_handle, email, password) VALUES (?, ?, ?, ?)';
   return new Promise((resolve, reject) => {
-    db.query(query, [username, email, password], (err, result) => {
+    db.query(query, [username, user_handle, email, password], (err, result) => {
       if (err) {
         reject(err);
       } else {
@@ -28,10 +28,10 @@ export const getUserByUsername = (db: mysql.Connection, username: string) => {
 };
 
 
-export const updateUserDetails = (userId: number, username: string, email: string) => {
-    const query = 'UPDATE users SET username = ?, email = ? WHERE id = ?';
+export const updateUserDetails = (userId: number, username: string, user_handle: string, email: string) => {
+    const query = 'UPDATE users SET username = ?, user_handle = ?, email = ? WHERE id = ?';
     return new Promise((resolve, reject) => {
-      db.query(query, [username, email, userId], (err, result) => {
+      db.query(query, [username, email, user_handle, userId], (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -77,9 +77,33 @@ export const updateUserDetails = (userId: number, username: string, email: strin
         if (err) {
           reject(err);
         } else {
-          resolve(users[0]); // Devuelve el primer resultado si existe
+          resolve(users[0]); 
         }
       });
     });
   };
+  
+
+  export const getUserByUserHandleFromDB = (user_handle: string) => {
+    return new Promise<any>((resolve, reject) => {
+      const query = `
+        SELECT * FROM users
+        WHERE user_handle = ?;
+      `;
+      db.query(query, [user_handle], (err, result) => {
+        if (err) {
+          console.error('Error al obtener usuario por user_handle:', err);
+          reject(err);
+        } else {
+          const user = result[0];
+          resolve(user);
+        }
+      });
+    });
+  };
+  
+  
+  
+  
+  
   

@@ -7,6 +7,7 @@ import db from './utils/db'; // Importa la instancia de la conexión
 import userRouter from './routes/userRoutes';
 import { saveMessageToDatabase } from './routes/chatRoutes';
 import { encryptMessage } from './utils/cryptoMessage';
+import cors from 'cors';
 
 const app = express();
 const server = http.createServer(app);
@@ -14,6 +15,13 @@ const io = new Server(server);
 const port = process.env.PORT || 3000;
 
 
+// CORS
+const corsOptions = {
+  origin: ['http://localhost:4200', 'http://localhost:3000'], // Lista de dominios permitidos
+  methods: 'GET,POST,PUT,DELETE' // Métodos HTTP permitidos
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 
@@ -43,10 +51,9 @@ io.on('connection', async (socket: any) => {
   }
 });
 
-
+// rutas principales
 app.use('/auth', authRoutes);
 app.use('/users', userRouter);
-
 
 server.listen(port, () => {
   console.log(`Servidor iniciado en http://localhost:${port}`);
