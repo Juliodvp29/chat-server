@@ -76,14 +76,25 @@ export const addFriend = async (req: any, res: any) => {
     try {
       const commonFriends = await listCommonFriendsForUsers(userId, friendId);
       
-      const response: ApiResponse = {
-        success: true,
-        message: 'Lista de amigos en común obtenida exitosamente',
-        data: {
-          commonFriends
-        }
-      };
-      res.status(200).json(response);
+      if(commonFriends.length === 0) {
+        const response: ApiResponse = {
+          success: false,
+          message: 'No hay amigos en comun para mostrar',
+          data: {
+            commonFriends
+          }
+        };
+        res.status(200).json(response);
+      }else{
+        const response: ApiResponse = {
+          success: true,
+          message: 'Lista de amigos en común obtenida exitosamente',
+          data: {
+            commonFriends
+          }
+        };
+        res.status(200).json(response);
+      }
     } catch (error) {
       console.error('Error al obtener la lista de amigos en común:', error);
       const response: ApiResponse = {

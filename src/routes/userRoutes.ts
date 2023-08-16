@@ -11,6 +11,6 @@ userRouter.get('/find/:user_handle', authenticateToken, findUserByUserHandle);
 userRouter.post('/add-friend', authenticateToken, addFriend); 
 userRouter.get('/:id/friends', authenticateToken, listUserFriends); 
 userRouter.delete('/:id/delete-friend', authenticateToken, deleteFriend);
-userRouter.get('/:id/common-friends/:friend_id', authenticateToken, listCommonFriends);
+userRouter.get('/:friend_id/common-friends/:id', authenticateToken, listCommonFriends);
 
 export default userRouter;

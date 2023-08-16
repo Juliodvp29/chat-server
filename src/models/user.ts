@@ -77,7 +77,7 @@ export const updateUserDetails = (userId: number, username: string, user_handle:
         if (err) {
           reject(err);
         } else {
-          resolve(users[0]); // Devuelve el primer resultado si existe
+          resolve(users[0]); 
         }
       });
     });
