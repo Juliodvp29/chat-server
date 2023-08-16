@@ -7,11 +7,11 @@ import db from '../utils/db';
 import { ApiResponse } from '../interfaces/response';
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
+  const { username, user_handle, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    await createUser(db, username, email, hashedPassword);
+    await createUser(db, username, user_handle, email, hashedPassword);
     const response: ApiResponse = {
       success: true,
       message: 'Usuario registrado exitosamente',
@@ -29,12 +29,13 @@ export const registerUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
+
   try {
     const user = await getUserByUsername(db, username);
     if (!user) {
       const response: ApiResponse = {
         success: false,
-        message: 'Usuario incorrecto',
+        message: 'Usuario incorrecto' 
       };
       res.status(401).json(response);
       return;
@@ -67,14 +68,21 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: any, res: Response) => {
     const userId = req.user.userId; // Obtiene el ID del usuario autenticado
-    const { username, email } = req.body;
+    const { username, user_handle, email } = req.body;
   
     try {
-      await updateUserDetails(userId, username, email);
-      res.status(200).json({ message: 'Usuario actualizado exitosamente' });
+      await updateUserDetails(userId, username, user_handle, email);
+      const response: ApiResponse = {
+        success: true,
+        message: 'Usuario actualizado exitosamente'
+      };
+      res.status(200).json(response);
     } catch (error) {
-      console.error('Error al actualizar usuario:', error);
-      res.status(500).json({ message: 'Error al actualizar usuario' });
+      const response: ApiResponse = {
+        success: false,
+        message: `Error al actualizar usuario: ${error}` 
+      };
+      res.status(500).json(response);
     }
   };
   
@@ -83,10 +91,17 @@ export const updateUser = async (req: any, res: Response) => {
   
     try {
       await deleteUserById(userId);
-      res.status(200).json({ message: 'Usuario eliminado exitosamente' });
+      const response: ApiResponse = {
+        success: true,
+        message: 'Usuario eliminado exitosamente',
+      };
+      res.status(200).json(response);
     } catch (error) {
-      console.error('Error al eliminar usuario:', error);
-      res.status(500).json({ message: 'Error al eliminar usuario' });
+      const response: ApiResponse = {
+        success: false,
+        message: `Error al eliminar usuario: ${error}`,
+      };
+      res.status(500).json(response);
     }
   };
   

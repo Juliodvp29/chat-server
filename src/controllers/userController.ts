@@ -1,5 +1,5 @@
 import { ApiResponse } from "../interfaces/response";
-import { getAllUsersFromDB, getUserByIdFromDB } from "../models/user";
+import { getAllUsersFromDB, getUserByIdFromDB, getUserByUserHandleFromDB } from "../models/user";
 
 export const getAllUsers = async (req: any, res: any) => {
     try {
@@ -44,3 +44,35 @@ export const getAllUsers = async (req: any, res: any) => {
     }
   };
   
+
+  export const findUserByUserHandle = async (req: any, res: any) => {
+    const user_handle = req.params.user_handle;
+  
+    try {
+      const user = await getUserByUserHandleFromDB(user_handle);
+      
+      if (!user) {
+        const response: ApiResponse = {
+          success: false,
+          message: 'Usuario no encontrado'
+        };
+        return res.status(404).json(response);
+      }
+  
+      const response: ApiResponse = {
+        success: true,
+        message: 'Usuario encontrado exitosamente',
+        data: {
+          user
+        }
+      };
+      res.status(200).json(response);
+    } catch (error) {
+      console.error('Error al buscar usuario por user_handle:', error);
+      const response: ApiResponse = {
+        success: false,
+        message: `Error al buscar usuario por user_handle: ${error}`
+      };
+      res.status(500).json(response);
+    }
+  };
