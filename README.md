@@ -1,4 +1,4 @@
-# Proyecto Chat application 
+#Chat API 
 
 ## Características
 
