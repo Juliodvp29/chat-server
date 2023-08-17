@@ -9,7 +9,7 @@ import { saveMessageToDatabase } from './routes/chatRoutes';
 import { encryptMessage } from './utils/cryptoMessage';
 import cors from 'cors';
 
-const app = express();
+export const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 const port = process.env.PORT || 3000;
