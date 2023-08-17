@@ -31,7 +31,7 @@ jspm_packages/
 Thumbs.db
 
 # Test 
-__tests__
+__tests__/
 jest.config.js
 .auth.test.ts
 
