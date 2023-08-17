@@ -31,8 +31,8 @@ jspm_packages/
 Thumbs.db
 
 # Test 
-__tests__/
-Jest.config.js
-.auth.ts
+__tests__
+jest.config.js
+.auth.test.ts
 
 test_users.txt
