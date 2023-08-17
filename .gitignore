@@ -30,5 +30,8 @@ jspm_packages/
 # Windows
 Thumbs.db
 
+# Test 
+
+Jest.config.js
 
 test_users.txt

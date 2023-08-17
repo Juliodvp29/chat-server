@@ -16,13 +16,13 @@ export const registerUser = async (req: Request, res: Response) => {
       success: true,
       message: 'Usuario registrado exitosamente',
     };
-    res.status(200).json(response);
+    res.status(201).json(response);
   } catch (error) {
     const response: ApiResponse = {
       success: false,
       message: `Error al registrar usuario: ${error}`,
     };
-    res.status(500).json(error);
+    res.status(500).json(response);
   }
 };
 
