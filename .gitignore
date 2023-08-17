@@ -31,7 +31,8 @@ jspm_packages/
 Thumbs.db
 
 # Test 
---test--/
+__test__/
 Jest.config.js
+.auth.ts
 
 test_users.txt
