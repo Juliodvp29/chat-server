@@ -9,7 +9,6 @@ describe('CHAT API', () => {
       expect(response.status).toBe(200);
       expect(response.body.message).toBe('Usuarios obtenidos exitosamente');
     });
-  
     it('should log in user', async () => {
         const response = await request(app)
           .post('/auth/login')
@@ -20,5 +19,4 @@ describe('CHAT API', () => {
         expect(response.status).toBe(200);
         expect(response.body.message).toBe('Usuario logueado exitosamente!');
       });
-
   });
