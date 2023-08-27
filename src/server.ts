@@ -18,7 +18,8 @@ const port = process.env.PORT || 3000;
 // CORS
 const corsOptions = {
   origin: ['http://localhost:4200', 'http://localhost:3000'], // Lista de dominios permitidos
-  methods: 'GET,POST,PUT,DELETE' // Métodos HTTP permitidos
+  methods: 'GET,POST,PUT,DELETE', // Métodos HTTP permitidos
+  credentials: true
 };
 
 app.use(cors(corsOptions));
